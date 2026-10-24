@@ -3,142 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Flower Boutique - Cozy Crush Edition</title>
+    <title>The Flower Boutique - Coffee Talk Edition</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=VT323&family=Quicksand:wght@500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 
         :root {
-            --bg-color: #2b1e2a;
-            --panel-bg: #3d293d;
-            --accent-pink: #ff7aa2;
-            --accent-neon: #00f0ff;
-            --accent-gold: #ffb703;
-            --text-light: #fff3f6;
-            --border-color: #5c3a5c;
+            --bg-dark: #120b17;
+            --brick-color: #2b1820;
+            --counter-wood: #3a2219;
+            --counter-top: #523124;
+            --text-speech: #fff0db;
+            --neon-green: #39ff14;
+            --neon-pink: #ff2a8d;
+            --ui-box-bg: rgba(20, 12, 24, 0.92);
         }
 
         * {
             box-sizing: border-box;
             user-select: none;
+            image-rendering: pixelated;
         }
 
         body {
             margin: 0;
             padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-light);
-            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg-dark);
+            color: #fff;
+            font-family: 'VT323', monospace;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
 
+        /* OYUN EKRANI */
         .game-screen {
-            width: 1000px;
-            height: 650px;
-            background: linear-gradient(135deg, #2b1e2a 0%, #1a101a 100%);
-            border: 4px solid var(--accent-pink);
-            border-radius: 20px;
-            box-shadow: 0 0 25px rgba(255, 122, 162, 0.3), inset 0 0 15px rgba(0, 240, 255, 0.1);
+            width: 960px;
+            height: 600px;
+            background: linear-gradient(180deg, #1d1021 0%, #120914 100%);
+            border: 4px solid #4a2d3b;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8), 0 0 15px rgba(255, 42, 141, 0.2);
             position: relative;
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
 
-        /* HEADER & NEON HUD */
-        .header-bar {
-            height: 70px;
-            background: rgba(61, 41, 61, 0.8);
-            border-bottom: 2px solid var(--accent-pink);
+        /* ÜST KATMAN: FOTOĞRAF VE MÜZİK KONTROLLERİ */
+        .top-bar {
+            height: 45px;
+            background: rgba(15, 8, 18, 0.95);
+            border-bottom: 2px solid #3d2230;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 25px;
-            backdrop-filter: blur(5px);
+            padding: 0 15px;
+            z-index: 10;
         }
 
-        .title {
-            font-family: 'VT323', monospace;
-            font-size: 32px;
-            color: var(--accent-neon);
-            text-shadow: 0 0 8px var(--accent-neon);
+        .bar-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 11px;
+            color: var(--neon-pink);
+            text-shadow: 0 0 8px var(--neon-pink);
         }
 
-        .stats-panel {
-            display: flex;
-            gap: 15px;
-        }
-
-        .stat-badge {
-            background: #251725;
-            border: 2px solid var(--accent-pink);
-            padding: 6px 14px;
-            border-radius: 12px;
-            font-weight: 700;
-            color: var(--accent-gold);
-            box-shadow: 0 0 8px rgba(255, 122, 162, 0.2);
-        }
-
-        .btn-action {
-            background: var(--accent-pink);
+        .btn-pixel {
+            background: #2b1823;
+            border: 2px solid var(--neon-pink);
             color: #fff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-family: inherit;
-            font-weight: 700;
+            font-family: 'VT323', monospace;
+            font-size: 18px;
+            padding: 2px 10px;
             cursor: pointer;
-            box-shadow: 0 0 10px var(--accent-pink);
-            transition: all 0.2s;
+            transition: all 0.1s;
         }
 
-        .btn-action:hover {
-            transform: scale(1.05);
-            background: #ff5285;
+        .btn-pixel:hover {
+            background: var(--neon-pink);
+            color: #000;
         }
 
-        /* MAIN CONTENT AREA */
-        .main-container {
+        /* ORTA KATMAN: DÜKKAN AMBİYANSI (COFFEE TALK BENZERİ LAYOUT) */
+        .shop-viewport {
             flex: 1;
             display: flex;
-            padding: 20px;
-            gap: 20px;
+            position: relative;
+            background-color: var(--brick-color);
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.3) 1px, transparent 1px),
+                linear-gradient(90px, rgba(0,0,0,0.3) 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
-        /* SERA PANELİ */
-        .greenhouse {
-            width: 320px;
-            background: rgba(61, 41, 61, 0.5);
-            border: 2px solid var(--border-color);
-            border-radius: 16px;
+        /* SOL: MÜŞTERİ VE CAFE TEZGAHI */
+        .counter-section {
+            width: 480px;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            border-right: 3px solid #24131d;
+        }
+
+        /* NEON TABELA VE PENCERE DETAYI */
+        .bg-window {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            width: 420px;
+            height: 180px;
+            background: #09050d;
+            border: 3px solid #3a2230;
+            box-shadow: inset 0 0 20px #000;
+            overflow: hidden;
+        }
+
+        .neon-sign {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: var(--neon-green);
+            font-family: 'Press Start 2P', monospace;
+            font-size: 12px;
+            text-shadow: 0 0 10px var(--neon-green);
+            opacity: 0.85;
+            animation: blink 3s infinite alternate;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.9; }
+            50% { opacity: 0.4; }
+        }
+
+        /* MÜŞTERİ PORTRESİ VE MASASI */
+        .customer-portrait-box {
+            position: absolute;
+            bottom: 70px;
+            left: 140px;
+            width: 200px;
+            height: 240px;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .customer-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 3px solid var(--neon-pink);
+            box-shadow: 0 0 15px rgba(255, 42, 141, 0.4);
+            border-radius: 8px;
+            background: #1a0f1d;
+        }
+
+        .wooden-counter {
+            height: 80px;
+            width: 100%;
+            background: linear-gradient(180deg, var(--counter-top) 0%, var(--counter-wood) 100%);
+            border-top: 4px solid #6b4131;
+            z-index: 3;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 20px;
+        }
+
+        /* SAĞ: ÇİÇEK ARAMA / ÇİÇEKÇİ TEZGAHI ARAYÜZÜ */
+        .crafting-section {
+            flex: 1;
+            background: #180e1a;
             padding: 15px;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            gap: 15px;
         }
 
-        .sec-title {
-            font-size: 20px;
-            color: var(--accent-pink);
-            font-weight: 700;
-            margin-bottom: 15px;
-            text-align: center;
+        .panel-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            color: var(--neon-pink);
+            border-bottom: 2px solid #3a2230;
+            padding-bottom: 5px;
         }
 
-        .pots-grid {
+        .pots-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            width: 100%;
+            gap: 10px;
+            flex: 1;
         }
 
-        .pot-card {
-            height: 120px;
-            background: #281928;
-            border: 2px solid var(--accent-pink);
-            border-radius: 14px;
+        .pot-slot {
+            background: #251526;
+            border: 2px dashed #4d2b42;
+            border-radius: 6px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -147,127 +210,71 @@
             transition: all 0.2s;
         }
 
-        .pot-card:hover {
-            border-color: var(--accent-neon);
-            box-shadow: 0 0 12px var(--accent-neon);
+        .pot-slot:hover {
+            border-color: var(--neon-pink);
+            background: #331c34;
         }
 
-        /* DÜKKAN & CUSTOMER PANELİ */
-        .boutique {
-            flex: 1;
+        /* ALT KATMAN: COFFEE TALK DİYALOG KUTUSU */
+        .dialogue-bar {
+            height: 140px;
+            background: var(--ui-box-bg);
+            border-top: 3px solid var(--neon-pink);
+            padding: 15px 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-        }
-
-        .customer-stage {
-            background: rgba(61, 41, 61, 0.6);
-            border: 2px solid var(--accent-pink);
-            border-radius: 16px;
-            padding: 20px;
-            display: flex;
-            gap: 20px;
-            align-items: center;
             position: relative;
+            z-index: 5;
         }
 
-        .avatar-box {
-            width: 120px;
-            height: 140px;
-            border: 3px solid var(--accent-neon);
-            border-radius: 12px;
-            overflow: hidden;
-            background: #1a101a;
-            box-shadow: 0 0 10px var(--accent-neon);
-            flex-shrink: 0;
-        }
-
-        .avatar-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .dialogue-box {
-            flex: 1;
-        }
-
-        .customer-name {
-            font-size: 24px;
-            color: var(--accent-pink);
-            font-weight: 700;
+        .speaker-name {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 12px;
+            color: var(--neon-green);
+            text-shadow: 0 0 5px var(--neon-green);
             margin-bottom: 5px;
         }
 
-        .order-badge {
-            display: inline-block;
-            background: var(--accent-gold);
-            color: #2b1e2a;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 14px;
-            margin-bottom: 10px;
+        .speech-content {
+            font-size: 22px;
+            color: var(--text-speech);
+            line-height: 1.2;
+            flex: 1;
         }
 
-        .speech-text {
-            font-size: 16px;
-            font-style: italic;
-            color: var(--text-light);
-            line-height: 1.4;
-            background: rgba(0,0,0,0.3);
-            padding: 10px;
-            border-radius: 8px;
-            border-left: 3px solid var(--accent-pink);
-        }
-
-        /* INVENTORY & SERVE */
-        .inventory-bar {
-            background: rgba(61, 41, 61, 0.6);
-            border: 2px solid var(--border-color);
-            border-radius: 16px;
-            padding: 15px;
+        .dialogue-footer {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
         }
 
-        .stock-tag {
-            font-size: 18px;
-            font-weight: 700;
+        .order-tag {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            background: #3a2230;
+            color: #ffb703;
+            padding: 4px 8px;
+            border-radius: 4px;
         }
 
-        /* MODAL POPUPS (JUKEBOX & AVATAR UPLOAD) */
-        .modal-overlay {
+        /* MODAL POPUP */
+        .modal {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 10, 15, 0.85);
+            background: rgba(0,0,0,0.85);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 100;
-            backdrop-filter: blur(4px);
         }
 
-        .modal-content {
-            background: var(--panel-bg);
-            border: 3px solid var(--accent-pink);
-            border-radius: 20px;
-            padding: 25px;
-            width: 450px;
-            box-shadow: 0 0 20px var(--accent-pink);
+        .modal-box {
+            background: #231324;
+            border: 3px solid var(--neon-pink);
+            padding: 20px;
+            width: 400px;
             text-align: center;
-        }
-
-        .file-input-btn {
-            margin: 10px 0;
-            background: #251725;
-            border: 2px dashed var(--accent-neon);
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            color: var(--accent-neon);
-            font-weight: 700;
         }
     </style>
 </head>
@@ -275,94 +282,89 @@
 
 <div class="game-screen">
 
-    <!-- HEADER -->
-    <div class="header-bar">
-        <div class="title">🌸 CRUSH FLOWER BOUTIQUE</div>
-        <div class="stats-panel">
-            <div class="stat-badge">💰 <span id="money">50</span> ₺</div>
-            <div class="stat-badge">💐 Mutlu: <span id="happy">0</span></div>
-            <button class="btn-action" onclick="openModal('jukeboxModal')">🎵 Jukebox</button>
-            <button class="btn-action" onclick="openModal('avatarModal')">🖼️ Fotoğraf Yükle</button>
+    <!-- ÜST BİLGİ BARI -->
+    <div class="top-bar">
+        <div class="bar-title">🌸 CRUSH FLOWER BOUTIQUE</div>
+        <div>
+            <span>💰 KASA: <span id="money">50</span>₺</span> | 
+            <span>💐 MUTLU: <span id="happy">0</span></span>
+        </div>
+        <div>
+            <button class="btn-pixel" onclick="openModal('imgModal')">📸 Fotoğraf Yükle</button>
+            <button class="btn-pixel" onclick="openModal('musicModal')">🎵 MP3 Yükle</button>
         </div>
     </div>
 
-    <!-- MAIN AREA -->
-    <div class="main-container">
+    <!-- ORTA KISIM: DÜKKAN GÖRÜNÜMÜ -->
+    <div class="shop-viewport">
 
-        <!-- SERA (SOL) -->
-        <div class="greenhouse">
-            <div class="sec-title">🌱 Çiçek Serası</div>
-            <div class="pots-grid">
-                <div class="pot-card" onclick="potAction(0)">
-                    <div id="potIcon0" style="font-size:36px;">🪴</div>
-                    <div id="potText0" style="font-size:12px; margin-top:5px;">Tohum Ek</div>
-                </div>
-                <div class="pot-card" onclick="potAction(1)">
-                    <div id="potIcon1" style="font-size:36px;">🪴</div>
-                    <div id="potText1" style="font-size:12px; margin-top:5px;">Tohum Ek</div>
-                </div>
-                <div class="pot-card" onclick="potAction(2)">
-                    <div id="potIcon2" style="font-size:36px;">🪴</div>
-                    <div id="potText2" style="font-size:12px; margin-top:5px;">Tohum Ek</div>
-                </div>
-                <div class="pot-card" onclick="potAction(3)">
-                    <div id="potIcon3" style="font-size:36px;">🪴</div>
-                    <div id="potText3" style="font-size:12px; margin-top:5px;">Tohum Ek</div>
-                </div>
+        <!-- SOL: MÜŞTERİ VE MASASI -->
+        <div class="counter-section">
+            <div class="bg-window">
+                <div class="neon-sign">CRUSH BOUTIQUE</div>
+            </div>
+
+            <div class="customer-portrait-box">
+                <img id="custAvatar" class="customer-img" src="https://via.placeholder.com/200x240/1a0f1d/ff2a8d?text=Efe" alt="Customer">
+            </div>
+
+            <div class="wooden-counter">
+                <div style="font-size: 20px;">☕ Taze Kahve</div>
+                <div style="font-size: 20px;">📜 Çiçek Listesi</div>
             </div>
         </div>
 
-        <!-- DÜKKAN (SAĞ) -->
-        <div class="boutique">
-            
-            <div class="customer-stage">
-                <div class="avatar-box">
-                    <img id="custImg" src="https://via.placeholder.com/120x140?text=Crush" alt="Customer">
+        <!-- SAĞ: ÇİÇEK YETİŞTİRME TEZGAHI -->
+        <div class="crafting-section">
+            <div class="panel-title">🌱 ÇİÇEK TEZGAHI (TIKLA & EK)</div>
+            <div class="pots-container">
+                <div class="pot-slot" onclick="potClick(0)">
+                    <div id="pIcon0" style="font-size:32px;">🪴</div>
+                    <div id="pText0" style="font-size:16px;">Tohum Ek</div>
                 </div>
-                <div class="dialogue-box">
-                    <div class="customer-name" id="custName">Müşteri Yükleniyor...</div>
-                    <div class="order-badge" id="custOrder">İstek: 🌹 Gül</div>
-                    <div class="speech-text" id="custDialogue">"Bugün özel bir gün için taze çiçekler arıyorum."</div>
+                <div class="pot-slot" onclick="potClick(1)">
+                    <div id="pIcon1" style="font-size:32px;">🪴</div>
+                    <div id="pText1" style="font-size:16px;">Tohum Ek</div>
+                </div>
+                <div class="pot-slot" onclick="potClick(2)">
+                    <div id="pIcon2" style="font-size:32px;">🪴</div>
+                    <div id="pText2" style="font-size:16px;">Tohum Ek</div>
+                </div>
+                <div class="pot-slot" onclick="potClick(3)">
+                    <div id="pIcon3" style="font-size:32px;">🪴</div>
+                    <div id="pText3" style="font-size:16px;">Tohum Ek</div>
                 </div>
             </div>
 
-            <div class="inventory-bar">
-                <div class="stock-tag">🌹 Gül: <span id="roseCount">0</span></div>
-                <div class="stock-tag">🌷 Lale: <span id="tulipCount">0</span></div>
-                <div class="stock-tag">🌻 Ayçiçeği: <span id="sunCount">0</span></div>
-                <button class="btn-action" onclick="serveCustomer()">Çiçeği Ver 💐</button>
+            <div class="panel-title">📦 ELDEKİ STOK</div>
+            <div style="display:flex; justify-content:space-between; font-size: 20px;">
+                <span>🌹 Gül: <b id="stRose">0</b></span>
+                <span>🌷 Lale: <b id="stTulip">0</b></span>
+                <span>🌻 Ayçiçeği: <b id="stSun">0</b></span>
             </div>
 
+            <button class="btn-pixel" style="width:100%; height:45px; font-size:22px;" onclick="deliverFlower()">💐 Siparişi Teslim Et</button>
         </div>
 
+    </div>
+
+    <!-- ALT KISIM: COFFEE TALK STİLİ DİYALOG KUTUSU -->
+    <div class="dialogue-bar">
+        <div class="speaker-name" id="speakerName">Efe</div>
+        <div class="speech-content" id="speechText">"Selam! Sahneden yeni çıktım, ortamın kokusu harika... Bana özel bir Gül (🌹) hazırlar mısın?"</div>
+        <div class="dialogue-footer">
+            <div class="order-tag" id="orderTag">İSTEK: 1x Gül (🌹)</div>
+            <button class="btn-pixel" onclick="advanceDialogue()">İlerle ▶</button>
+        </div>
     </div>
 
 </div>
 
-<!-- MODAL 1: JUKEBOX -->
-<div class="modal-overlay" id="jukeboxModal">
-    <div class="modal-content">
-        <h2 style="color: var(--accent-pink);">🎵 Retro Jukebox</h2>
-        <p>Kendi MP3 Şarkını Yükle veya Arka Plan Müziğini Seç:</p>
-        
-        <label class="file-input-btn" style="display:block;">
-            📂 Kendi MP3 Dosyanı Seç
-            <input type="file" id="audioUploader" accept="audio/*" style="display:none;" onchange="handleAudioUpload(event)">
-        </label>
-
-        <p style="font-size:13px; color:#aaa;">Çalan Şarkı: <span id="currentTrackName">Varsayılan Lo-Fi</span></p>
-
-        <button class="btn-action" onclick="closeModal('jukeboxModal')">Kapat</button>
-    </div>
-</div>
-
-<!-- MODAL 2: AVATAR YÜKLEME -->
-<div class="modal-overlay" id="avatarModal">
-    <div class="modal-content">
-        <h2 style="color: var(--accent-neon);">🖼️ Crush Üyeleri Fotoğraf Yükleyici</h2>
-        <p>Üye seçip galerinden fotoğrafını güncelleyebilirsin:</p>
-
-        <select id="memberSelect" style="width:100%; padding:8px; margin-bottom:10px; border-radius:8px;">
+<!-- MODAL: FOTOĞRAF YÜKLE -->
+<div class="modal" id="imgModal">
+    <div class="modal-box">
+        <h3 style="color:var(--neon-pink);">📸 FOTOĞRAF YÜKLE</h3>
+        <select id="memberSelect" style="width:100%; padding:8px; margin-bottom:10px;">
             <option value="Efe">Efe</option>
             <option value="Oğuzhan">Oğuzhan</option>
             <option value="Arda">Arda</option>
@@ -371,33 +373,66 @@
             <option value="Batu">Batu</option>
             <option value="Milan">Milan</option>
         </select>
+        <input type="file" id="imgFile" accept="image/*" onchange="uploadImage(event)">
+        <br><br>
+        <button class="btn-pixel" onclick="closeModal('imgModal')">Kapat</button>
+    </div>
+</div>
 
-        <label class="file-input-btn" style="display:block;">
-            📸 Fotoğraf Seç / Yükle
-            <input type="file" id="imgUploader" accept="image/*" style="display:none;" onchange="handleImageUpload(event)">
-        </label>
-
-        <button class="btn-action" onclick="closeModal('avatarModal')">Tamamdır</button>
+<!-- MODAL: MP3 YÜKLE -->
+<div class="modal" id="musicModal">
+    <div class="modal-box">
+        <h3 style="color:var(--neon-green);">🎵 MP3 MÜZİK YÜKLE</h3>
+        <input type="file" id="audioFile" accept="audio/*" onchange="uploadAudio(event)">
+        <br><br>
+        <button class="btn-pixel" onclick="closeModal('musicModal')">Kapat</button>
     </div>
 </div>
 
 <audio id="bgAudio" loop></audio>
 
 <script>
-    // CRUSH ÜYELERİ VE DİYALOGLARI
-    let members = [
-        { name: "Efe", order: "Rose", orderText: "🌹 Gül", dialogue: "Selam! Sahneden yeni çıktım, çok yorgunum ama sana uğramak istedim.", img: "" },
-        { name: "Oğuzhan", order: "Tulip", orderText: "🌷 Lale", dialogue: "Hey! Yeni şarkımızın klibi için masama zarif laleler lazım.", img: "" },
-        { name: "Arda", order: "Sun", orderText: "🌻 Ayçiçeği", dialogue: "Güneş gibi parlayan neşeli bir ayçiçeği buqeti hazırlar mısın?", img: "" },
-        { name: "Barış", order: "Rose", orderText: "🌹 Gül", dialogue: "Selam! Stüdyodaki arkadaşlara hediye etmek için kırmızı gül alacağım.", img: "" },
-        { name: "Miraç", order: "Tulip", orderText: "🌷 Lale", dialogue: "Kahvemin yanına çok yakışacak renkli bir lale arıyorum.", img: "" },
-        { name: "Batu", order: "Sun", orderText: "🌻 Ayçiçeği", dialogue: "Provadan çıktım, dükkanın kokusu dışarıdan bile harika hissettiriyor!", img: "" },
-        { name: "Milan", order: "Rose", orderText: "🌹 Gül", dialogue: "Crush grubunun en güzel çiçeğini seçmeye geldim!", img: "" }
+    const customers = [
+        {
+            name: "Efe",
+            order: "Rose",
+            orderName: "🌹 Gül",
+            dialogues: [
+                "Selam! Sahneden yeni çıktım, ortamın kokusu harika... Bana özel bir Gül (🌹) hazırlar mısın?",
+                "Geçen günkü konserde mikrofonda sorun çıktı ama yine de çok eğlendik!",
+                "Çiçekler için teşekkürler, tam istediğim gibi kokuyor!"
+            ],
+            img: ""
+        },
+        {
+            name: "Oğuzhan",
+            order: "Tulip",
+            orderName: "🌷 Lale",
+            dialogues: [
+                "Hey! Yeni klip çekimi için renkli taze Laleler (🌷) lazım.",
+                "Şarkının akorlarını düzenlerken biraz yoruldum, burası çok huzurlu geldi.",
+                "Laleler klibin atmosferine harika uyacak, eline sağlık!"
+            ],
+            img: ""
+        },
+        {
+            name: "Arda",
+            order: "Sun",
+            orderName: "🌻 Ayçiçeği",
+            dialogues: [
+                "Güneş gibi parlayan güzel bir Ayçiçeği (🌻) buqeti hazırlar mısın?",
+                "Bugün stüdyoda yeni bir beste üzerinde çalıştık, içim kıpır kıpır.",
+                "Bu ayçiçeği odamın tüm enerjisini değiştirecek!"
+            ],
+            img: ""
+        }
     ];
 
+    let currentCustIndex = 0;
+    let dialogueStep = 0;
     let money = 50;
     let happy = 0;
-    let currentCust = null;
+
     let stocks = { Rose: 0, Tulip: 0, Sun: 0 };
     let pots = [
         { state: 'empty', type: null },
@@ -406,24 +441,50 @@
         { state: 'empty', type: null }
     ];
 
-    const flowers = [
+    const flowerList = [
         { type: "Rose", icon: "🌹" },
         { type: "Tulip", icon: "🌷" },
         { type: "Sun", icon: "🌻" }
     ];
 
-    // MODALS
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-    // SERA / SAKSI İŞLEMLERİ
-    function potAction(index) {
+    function updateUI() {
+        let c = customers[currentCustIndex];
+        document.getElementById('speakerName').innerText = c.name;
+        document.getElementById('speechText').innerText = `"${c.dialogues[dialogueStep]}"`;
+        document.getElementById('orderTag').innerText = `İSTEK: 1x ${c.orderName}`;
+        
+        let imgEl = document.getElementById('custAvatar');
+        if (c.img) {
+            imgEl.src = c.img;
+        } else {
+            imgEl.src = `https://via.placeholder.com/200x240/1a0f1d/ff2a8d?text=${c.name}`;
+        }
+
+        document.getElementById('money').innerText = money;
+        document.getElementById('happy').innerText = happy;
+        document.getElementById('stRose').innerText = stocks.Rose;
+        document.getElementById('stTulip').innerText = stocks.Tulip;
+        document.getElementById('stSun').innerText = stocks.Sun;
+    }
+
+    function advanceDialogue() {
+        let c = customers[currentCustIndex];
+        if (dialogueStep < c.dialogues.length - 1) {
+            dialogueStep++;
+            updateUI();
+        }
+    }
+
+    function potClick(index) {
         let p = pots[index];
-        let icon = document.getElementById(`potIcon${index}`);
-        let text = document.getElementById(`potText${index}`);
+        let icon = document.getElementById(`pIcon${index}`);
+        let text = document.getElementById(`pText${index}`);
 
         if (p.state === 'empty') {
-            let f = flowers[Math.floor(Math.random() * flowers.length)];
+            let f = flowerList[Math.floor(Math.random() * flowerList.length)];
             p.type = f;
             p.state = 'growing';
             icon.innerText = "🌱";
@@ -436,81 +497,58 @@
             }, 2500);
         } else if (p.state === 'ready') {
             stocks[p.type.type]++;
-            updateInventoryUI();
             p.state = 'empty';
             p.type = null;
             icon.innerText = "🪴";
             text.innerText = "Tohum Ek";
+            updateUI();
         }
     }
 
-    function updateInventoryUI() {
-        document.getElementById('roseCount').innerText = stocks.Rose;
-        document.getElementById('tulipCount').innerText = stocks.Tulip;
-        document.getElementById('sunCount').innerText = stocks.Sun;
-    }
-
-    // MÜŞTERİ YÖNETİMİ
-    function nextCustomer() {
-        currentCust = members[Math.floor(Math.random() * members.length)];
-        document.getElementById('custName').innerText = currentCust.name;
-        document.getElementById('custOrder').innerText = "İstek: " + currentCust.orderText;
-        document.getElementById('custDialogue').innerText = `"${currentCust.dialogue}"`;
-        
-        let imgEl = document.getElementById('custImg');
-        if (currentCust.img) {
-            imgEl.src = currentCust.img;
-        } else {
-            imgEl.src = `https://via.placeholder.com/120x140/3d293d/ff7aa2?text=${currentCust.name}`;
-        }
-    }
-
-    function serveCustomer() {
-        if (!currentCust) return;
-        if (stocks[currentCust.order] > 0) {
-            stocks[currentCust.order]--;
+    function deliverFlower() {
+        let c = customers[currentCustIndex];
+        if (stocks[c.order] > 0) {
+            stocks[c.order]--;
             money += 40;
             happy++;
-            document.getElementById('money').innerText = money;
-            document.getElementById('happy').innerText = happy;
-            updateInventoryUI();
-            alert(`${currentCust.name} çiçeği çok beğendi! 💖 (+40 ₺)`);
-            nextCustomer();
+            dialogueStep = 2; // Mutlu diyalog
+            updateUI();
+            
+            setTimeout(() => {
+                currentCustIndex = (currentCustIndex + 1) % customers.length;
+                dialogueStep = 0;
+                updateUI();
+            }, 2000);
         } else {
-            alert(`Elinde istenen çiçekten yok! Seradan çiçek yetiştirmelisin.`);
+            alert(`Sipariş edilen çiçek elinizde yok! Seradan çiçek yetiştirmelisiniz.`);
         }
     }
 
-    // MP3 YÜKLEME (JUKEBOX)
-    function handleAudioUpload(e) {
+    function uploadImage(e) {
         let file = e.target.files[0];
+        let selected = document.getElementById('memberSelect').value;
         if (file) {
-            let audioEl = document.getElementById('bgAudio');
-            audioEl.src = URL.createObjectURL(file);
-            audioEl.play();
-            document.getElementById('currentTrackName').innerText = file.name;
-        }
-    }
-
-    // FOTOĞRAF YÜKLEME (AVATAR)
-    function handleImageUpload(e) {
-        let file = e.target.files[0];
-        let selectedMember = document.getElementById('memberSelect').value;
-        if (file) {
-            let imgUrl = URL.createObjectURL(file);
-            let m = members.find(x => x.name === selectedMember);
-            if (m) {
-                m.img = imgUrl;
-                alert(`${selectedMember} için yeni fotoğraf yüklendi!`);
-                if (currentCust && currentCust.name === selectedMember) {
-                    document.getElementById('custImg').src = imgUrl;
-                }
+            let url = URL.createObjectURL(file);
+            let target = customers.find(x => x.name === selected);
+            if (target) {
+                target.img = url;
+                updateUI();
+                alert(`${selected} için fotoğraf güncellendi!`);
             }
         }
     }
 
-    // BAŞLANGIÇ
-    nextCustomer();
+    function uploadAudio(e) {
+        let file = e.target.files[0];
+        if (file) {
+            let audio = document.getElementById('bgAudio');
+            audio.src = URL.createObjectURL(file);
+            audio.play();
+            alert(`Müzik çalıyor: ${file.name}`);
+        }
+    }
+
+    updateUI();
 </script>
 
 </body>
