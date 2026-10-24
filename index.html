@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Flower Boutique - Crush Edition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
+
+        :root {
+            --bg-color: #fdf6ec;
+            --panel-bg: #fffbf5;
+            --accent-pink: #f2a6b4;
+            --accent-pink-dark: #d87085;
+            --accent-green: #90c8ac;
+            --accent-green-dark: #62977a;
+            --text-color: #5c4033;
+            --border-color: #e8d0be;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4e8d8;
+            color: var(--text-color);
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .game-screen {
+            width: 960px;
+            height: 620px;
+            background-color: var(--bg-color);
+            border: 8px solid #d4a373;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(92, 64, 51, 0.25);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header-bar {
+            height: 65px;
+            background: var(--panel-bg);
+            border-bottom: 3px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 25px;
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--accent-pink-dark);
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .stat-item {
+            background: #faedcd;
+            padding: 6px 14px;
+            border-radius: 12px;
+            border: 2px solid #e9edc9;
+        }
+
+        .main-area {
+            flex: 1;
+            display: flex;
+            position: relative;
+        }
+
+        .greenhouse-section {
+            width: 320px;
+            background: rgba(254, 250, 224, 0.6);
+            border-right: 3px dashed var(--border-color);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-green-dark);
+        }
+
+        .pots-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            width: 100%;
+        }
+
+        .pot {
+            height: 110px;
+            background: #fefae0;
+            border: 3px solid var(--accent-green);
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .pot:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-green-dark);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .pot-icon {
+            font-size: 38px;
+            margin-bottom: 4px;
+        }
+
+        .pot-status {
+            font-size: 13px;
+            font-weight: 700;
+            color: #7f5539;
+        }
+
+        .boutique-section {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            background: radial-gradient(circle, #fffdfa 0%, #fef6ec 100%);
+        }
+
+        .customer-card {
+            width: 420px;
+            background: var(--panel-bg);
+            border: 3px solid var(--accent-pink);
+            border-radius: 18px;
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            position: relative;
+        }
+
+        .customer-avatar {
+            width: 95px;
+            height: 110px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 3px solid var(--accent-pink-dark);
+            background: #eee;
+        }
+
+        .customer-info {
+            flex: 1;
+        }
+
+        .customer-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent-pink-dark);
+            margin-bottom: 4px;
+        }
+
+        .customer-order {
+            font-size: 15px;
+            background: #faedcd;
+            padding: 6px 10px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .customer-dialogue {
+            font-size: 14px;
+            font-style: italic;
+            color: #6c584c;
+            line-height: 1.3;
+        }
+
+        .inventory-panel {
+            width: 100%;
+            background: var(--panel-bg);
+            border: 3px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .stock-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stock-count {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .serve-btn {
+            background: var(--accent-pink-dark);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 4px 10px rgba(216, 112, 133, 0.4);
+        }
+
+        .serve-btn:hover {
+            background: #c5576e;
+        }
+
+        .start-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(92, 64, 51, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .start-modal {
+            background: var(--panel-bg);
+            border: 4px solid var(--accent-pink);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            width: 400px;
+        }
+
+        .track-btn {
+            background: #faedcd;
+            border: 2px solid var(--border-color);
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .track-btn.selected {
+            background: var(--accent-pink);
+            color: white;
+            border-color: var(--accent-pink-dark);
+        }
+
+        .start-btn {
+            margin-top: 15px;
+            background: var(--accent-green-dark);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-screen">
+
+    <div class="start-overlay" id="startOverlay">
+        <div class="start-modal">
+            <h1 style="color: var(--accent-pink-dark); margin-top:0;">🌸 The Flower Boutique 🌸</h1>
+            <p>Arka Planda Çalacak Şarkıyı Seçin:</p>
+            <div class="track-btn selected" onclick="chooseTrack(0, this)">🎵 Crush!</div>
+            <div class="track-btn" onclick="chooseTrack(1, this)">🎵 Benim Olsana</div>
+            <button class="start-btn" onclick="startGame()">DÜKKANI AÇ</button>
+        </div>
+    </div>
+
+    <div class="header-bar">
+        <div class="title">🌸 Crush Flower Boutique</div>
+        <div class="stats">
+            <div class="stat-item">💰 Kasadaki Para: <span id="moneyText">50</span> ₺</div>
+            <div class="stat-item">💐 Mutlu Müşteri: <span id="happyText">0</span></div>
+        </div>
+    </div>
+
+    <div class="main-area">
+
+        <div class="greenhouse-section">
+            <div class="section-title">🌱 Çiçek Serası (Tıkla & Ekmeye Başla)</div>
+            <div class="pots-grid">
+                <div class="pot" onclick="interactPot(0)">
+                    <div class="pot-icon" id="potIcon0">🪴</div>
+                    <div class="pot-status" id="potStatus0">Tohum Ek</div>
+                </div>
+                <div class="pot" onclick="interactPot(1)">
+                    <div class="pot-icon" id="potIcon1">🪴</div>
+                    <div class="pot-status" id="potStatus1">Tohum Ek</div>
+                </div>
+                <div class="pot" onclick="interactPot(2)">
+                    <div class="pot-icon" id="potIcon2">🪴</div>
+                    <div class="pot-status" id="potStatus2">Tohum Ek</div>
+                </div>
+                <div class="pot" onclick="interactPot(3)">
+                    <div class="pot-icon" id="potIcon3">🪴</div>
+                    <div class="pot-status" id="potStatus3">Tohum Ek</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="boutique-section">
+            <div style="font-size: 18px; font-weight: 700; color: var(--accent-pink-dark);">🏪 Dükkandaki Müşteri</div>
+
+            <div class="customer-card">
+                <img id="custAvatar" class="customer-avatar" src="" alt="Müşteri">
+                <div class="customer-info">
+                    <div class="customer-name" id="custName">Yükleniyor...</div>
+                    <div class="customer-order">İstek: <span id="custOrder">Gül Buqeti</span></div>
+                    <div class="customer-dialogue" id="custDialogue">"Bugün özel biri için taze çiçekler almaya geldim!"</div>
+                </div>
+            </div>
+
+            <div class="inventory-panel">
+                <div class="stock-item">
+                    <span style="font-size:24px;">🌹</span>
+                    <span class="stock-count">Gül: <span id="stockRose">0</span></span>
+                </div>
+                <div class="stock-item">
+                    <span style="font-size:24px;">🌷</span>
+                    <span class="stock-count">Lale: <span id="stockTulip">0</span></span>
+                </div>
+                <div class="stock-item">
+                    <span style="font-size:24px;">🌻</span>
+                    <span class="stock-count">Ayçiçeği: <span id="stockSun">0</span></span>
+                </div>
+                <button class="serve-btn" onclick="serveCustomer()">Çiçeği Ver 💐</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<audio id="bgMusic" loop></audio>
+
+<script>
+    const customers = [
+        { name: "Efe", src: "a15b12bac93d8fef05363a583a5640be.jpg", order: "🌹 Gül", orderType: "Rose", dialogue: "Selam! Sahneden sonra dükkanına uğramak harika hissettirdi." },
+        { name: "Oğuzhan", src: "686e53c855e622eebf8dd64717a7ce3d (1).jpg", order: "🌷 Lale", orderType: "Tulip", dialogue: "Hey! Yeni şarkımızın klibi için renkli taze çiçekler lazım." },
+        { name: "Arda", src: "c3727dcb337b5b956b9a5e56b1e59ca2.jpg", order: "🌻 Ayçiçeği", orderType: "Sun", dialogue: "Güneş gibi parlayan güzel bir ayçiçeği buqeti hazırlar mısın?" },
+        { name: "Barış", src: "a6953c2052426997626e300fc363fe35.jpg", order: "🌹 Gül", orderType: "Rose", dialogue: "Selam dostum! Kırmızı güllerin kokusu stüdyoya kadar geldi." },
+        { name: "Miraç", src: "b146632a9173361c58bdc623054bf8c2.jpg", order: "🌷 Lale", orderType: "Tulip", dialogue: "Zarif bir lale buqeti almak istiyorum, yardımcı olur musun?" },
+        { name: "Batu", src: "IMG_20261022_163354_325.jpg", order: "🌻 Ayçiçeği", orderType: "Sun", dialogue: "Harika bir gün! Masama koymak için neşeli bir çiçek arıyorum." },
+        { name: "Milan", src: "7fe46a1a08c2bfb6064d46ab68d54609.jpg", order: "🌹 Gül", orderType: "Rose", dialogue: "Crush grubunun en güzel çiçeğini seçmeye geldim!" }
+    ];
+
+    const musicList = [
+        { title: "Crush!", src: "CRUSH - CRUSH! Resmi Müzik Videosu.mp3" },
+        { title: "Benim Olsana", src: "CRUSH - BENİM OLSANA Resmi Müzik Videosu.mp3" }
+    ];
+
+    let selectedMusicIndex = 0;
+    let money = 50;
+    let happyCustomers = 0;
+    let currentCustomer = null;
+
+    let stocks = { Rose: 0, Tulip: 0, Sun: 0 };
+    let pots = [
+        { state: 'empty', flower: null },
+        { state: 'empty', flower: null },
+        { state: 'empty', flower: null },
+        { state: 'empty', flower: null }
+    ];
+
+    const flowerTypes = [
+        { name: "Rose", icon: "🌹", label: "Gül" },
+        { name: "Tulip", icon: "🌷", label: "Lale" },
+        { name: "Sun", icon: "🌻", label: "Ayçiçeği" }
+    ];
+
+    function chooseTrack(index, el) {
+        selectedMusicIndex = index;
+        document.querySelectorAll('.track-btn').forEach(b => b.classList.remove('selected'));
+        el.classList.add('selected');
+    }
+
+    function startGame() {
+        document.getElementById('startOverlay').style.display = 'none';
+        const audio = document.getElementById('bgMusic');
+        audio.src = musicList[selectedMusicIndex].src;
+        audio.play().catch(e => console.log("Müzik çalıştırılamadı:", e));
+        nextCustomer();
+    }
+
+    function interactPot(index) {
+        let pot = pots[index];
+        let iconEl = document.getElementById(`potIcon${index}`);
+        let statusEl = document.getElementById(`potStatus${index}`);
+
+        if (pot.state === 'empty') {
+            let randomFlower = flowerTypes[Math.floor(Math.random() * flowerTypes.length)];
+            pot.flower = randomFlower;
+            pot.state = 'growing';
+            iconEl.innerText = "🌱";
+            statusEl.innerText = "Büyüyor...";
+
+            setTimeout(() => {
+                pot.state = 'ready';
+                iconEl.innerText = pot.flower.icon;
+                statusEl.innerText = "Topla!";
+            }, 3000);
+        } else if (pot.state === 'ready') {
+            stocks[pot.flower.name]++;
+            updateStockUI();
+            
+            pot.state = 'empty';
+            pot.flower = null;
+            iconEl.innerText = "🪴";
+            statusEl.innerText = "Tohum Ek";
+        }
+    }
+
+    function updateStockUI() {
+        document.getElementById('stockRose').innerText = stocks.Rose;
+        document.getElementById('stockTulip').innerText = stocks.Tulip;
+        document.getElementById('stockSun').innerText = stocks.Sun;
+    }
+
+    function nextCustomer() {
+        currentCustomer = customers[Math.floor(Math.random() * customers.length)];
+        document.getElementById('custAvatar').src = currentCustomer.src;
+        document.getElementById('custName').innerText = currentCustomer.name;
+        document.getElementById('custOrder').innerText = currentCustomer.order;
+        document.getElementById('custDialogue').innerText = `"${currentCustomer.dialogue}"`;
+    }
+
+    function serveCustomer() {
+        if (!currentCustomer) return;
+
+        let required = currentCustomer.orderType;
+        if (stocks[required] > 0) {
+            stocks[required]--;
+            money += 35;
+            happyCustomers++;
+            
+            document.getElementById('moneyText').innerText = money;
+            document.getElementById('happyText').innerText = happyCustomers;
+            updateStockUI();
+
+            alert(`${currentCustomer.name} çiçeği çok beğendi ve 35 ₺ bıraktı! 💖`);
+            nextCustomer();
+        } else {
+            alert(`Henüz elinde ${currentCustomer.order} yok! Seradaki saksılara tıklayarak çiçek yetiştirebilirsin.`);
+        }
+    }
+</script>
+
+</body>
+</html>
